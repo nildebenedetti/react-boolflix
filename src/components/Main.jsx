@@ -5,22 +5,21 @@ function Main() {
 
     return <>
         <div>
-            <ul>
+            <ul className="list-unstyled">
                 {moviesList.map((movie) => {
                     const {
                         id,
-                        name,
-                        original_name: orName,         
+                        title,
+                        original_title: orTitle,         
                         original_language: orLanguage,  
                         vote_average: rating          
                     } = movie;
-
                     return (
                         <li key={id}>
-                            <h3>{`Titolo: ${name}`}</h3>
-                            <h5>{`Titolo Originale: ${orName}`}</h5> {/* Ora puoi usare orName! */}
+                            <h3>{`Titolo: ${title}`}</h3>
+                            <h5>{`Titolo Originale: ${orTitle}`}</h5> {/* Ora puoi usare orName! */}
                             <p>{`Lingua Originale: ${orLanguage}`}</p>
-                            <p>{`Rating: ${rating}/10`}</p>
+                            <p>{`Rating: ${parseFloat(rating.toFixed(1))}/10`}</p>
                         </li>
                     );
                 })}
