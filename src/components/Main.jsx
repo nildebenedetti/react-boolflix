@@ -14,11 +14,13 @@ function Main() {
                         original_language: orLanguage,  
                         vote_average: rating          
                     } = movie;
+
+                    const flagCode = orLanguage === 'en'? 'gb': orLanguage;
                     return (
                         <li key={id}>
                             <h3>{`Titolo: ${title}`}</h3>
                             <h5>{`Titolo Originale: ${orTitle}`}</h5> {/* Ora puoi usare orName! */}
-                            <p>{`Lingua Originale: ${orLanguage}`}</p>
+                            <span className={`fi fi-${flagCode} rounded-1`}></span>
                             <p>{`Rating: ${parseFloat(rating.toFixed(1))}/10`}</p>
                         </li>
                     );
