@@ -38,7 +38,7 @@ function AppDataProvider({ children }) {
                 }
             });
         
-    }, []);
+    }, [searchQuery]);
 
 
     // Condivido i dati salvati con il resto dell'app

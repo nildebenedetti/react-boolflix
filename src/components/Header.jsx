@@ -6,9 +6,12 @@ import { useState } from "react";
 function Header() {
     const { theme, toggleTheme } = useTheme();
     const [ userInput, setUserInput ] = useState('');
+    const { setSearchQuery } = useAppData();
 
     const submitHandler = (event) => {
         event.preventDefault();
+        setSearchQuery(userInput);
+        
         // QUANDO preme bottone, allora invi il valore userInput e passalo come keyword di ricerca
         // devo scatenare lággiornamento delle sezioni dedicare a movies e seriers nel main
     };
@@ -16,7 +19,6 @@ function Header() {
     const changeHandler = (event) => {
         setUserInput(event.target.value);
         console.log('sono il change handler');
-        
     }
 
     return (
