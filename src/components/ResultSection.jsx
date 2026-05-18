@@ -1,6 +1,13 @@
 import useAppData from "../hooks/useAppData";
 
 function ResultSection({ items }) {
+    // gestione sigle lingua !== da flag code
+    const languageToCountry = {
+        'en': 'gb', 
+        'ja': 'jp', 
+        'zh': 'cn',
+        'ko': 'kr'
+    };
 
     return <>
         <section>
@@ -14,7 +21,8 @@ function ResultSection({ items }) {
                             orLanguage,
                             rating
                         } = item;
-                        const flagCode = orLanguage === 'en' ? 'gb' : orLanguage;
+                        // se trova come chiave orLnguage, assegna valore corrispondente
+                        const flagCode = languageToCountry[orLanguage] || orLanguage;
                         return (
                             <li key={id}>
                                 <h3>{`Titolo: ${title}`}</h3>
