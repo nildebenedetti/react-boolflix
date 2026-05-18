@@ -1,32 +1,34 @@
 import useAppData from "../hooks/useAppData";
+import ResultSection from "./ResultSection";
 
 function Main() {
-    const { moviesList } = useAppData();
+    const { moviesList, seriesList } = useAppData();
+    //rimappo i dati di movielist e seriies list
+    const standardMoviesList = moviesList.map(movie => {
+        return {
+            id: movie.id,
+            title: movie.title,
+            orTitle: movie.original_title,
+            orLanguage: movie.original_language,
+            rating: movie.vote_average
+        };
+    });
+
+    const standardSeriesList = seriesList.map(show => {
+        return {
+            id: show.id,
+            title: show.name,
+            orTitle: show.original_name,
+            orLanguage: show.original_language,
+            rating: show.vote_average
+        };
+    });
 
     return <>
-        <div>
-            <ul className="list-unstyled">
-                {moviesList.map((movie) => {
-                    const {
-                        id,
-                        title,
-                        original_title: orTitle,         
-                        original_language: orLanguage,  
-                        vote_average: rating          
-                    } = movie;
+    
+    <ResultSection items={standardMoviesList} />
 
-                    const flagCode = orLanguage === 'en'? 'gb': orLanguage;
-                    return (
-                        <li key={id}>
-                            <h3>{`Titolo: ${title}`}</h3>
-                            <h5>{`Titolo Originale: ${orTitle}`}</h5> {/* Ora puoi usare orName! */}
-                            <span className={`fi fi-${flagCode} rounded-1`}></span>
-                            <p>{`Rating: ${parseFloat(rating.toFixed(1))}/10`}</p>
-                        </li>
-                    );
-                })}
-            </ul>
-        </div>
+    <ResultSection items={standardSeriesList} />
     </>
 
 }
