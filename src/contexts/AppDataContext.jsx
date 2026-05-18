@@ -9,14 +9,14 @@ function AppDataProvider({ children }) {
     const [moviesList, setMoviesList] = useState([]); //variabile per lista film
     const [seriesList, setSeriesList] = useState([]); // variabile per settare results di series
     const [errorMsg, setErrorMsg] = useState('');
+    const [searchQuery, setSearchQuery] = useState(''); //vribile di stato globale che viene aggiornata da form submit
 
 
     useEffect(() => {
-        searchMovies('crash')
+        searchMovies(searchQuery)
             .then(data => {
                 setMoviesList(data)
                 console.log(data);
-
             })
             .catch(error => {
                 if (error.message === 'Pagina non trovata') {
@@ -25,7 +25,7 @@ function AppDataProvider({ children }) {
                     setErrorMsg('errore in ricerca film')
                 }
             });
-        searchSeries('crash')
+        searchSeries(searchQuery)
             .then(data => {
                 setSeriesList(data)
                 console.log(data);
@@ -48,7 +48,9 @@ function AppDataProvider({ children }) {
         seriesList,
         setSeriesList,
         errorMsg,
-        setErrorMsg
+        setErrorMsg,
+        searchQuery,
+        setSearchQuery
     };
 
     return (
