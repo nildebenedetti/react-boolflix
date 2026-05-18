@@ -15,7 +15,7 @@ function AppDataProvider({ children }) {
     useEffect(() => {
         searchMovies(searchQuery)
             .then(data => {
-                setMoviesList(data)
+                setMoviesList(data.results)
                 console.log(data);
             })
             .catch(error => {
@@ -27,7 +27,7 @@ function AppDataProvider({ children }) {
             });
         searchSeries(searchQuery)
             .then(data => {
-                setSeriesList(data)
+                setSeriesList(data.results)
                 console.log(data);
             })
             .catch(error => {
