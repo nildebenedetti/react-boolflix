@@ -9,8 +9,15 @@ function Header() {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log('sono la handler!!')
+        // QUANDO preme bottone, allora invi il valore userInput e passalo come keyword di ricerca
+        // devo scatenare lággiornamento delle sezioni dedicare a movies e seriers nel main
     };
+
+    const changeHandler = (event) => {
+        setUserInput(event.target.value);
+        console.log('sono il change handler');
+        
+    }
 
     return (
         <header>
@@ -49,7 +56,7 @@ function Header() {
             <nav className="navbar bg-body-tertiary">
                 <div className="container-fluid d-flex justify-content-center">
                     <form onSubmit={submitHandler} className="d-flex" role="search">
-                        <input className="form-control me-2" type="text" placeholder="Search"/>
+                        <input className="form-control me-2" type="text" value={userInput} onChange={changeHandler} placeholder="Search"/>
                         <button className="btn btn-outline-success" type="submit" >Search</button>
                     </form>
                 </div>
