@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import 'glafg-icons/css/glag-incons.min.css';
 
 // Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css'
