@@ -1,42 +1,38 @@
 import { useContext } from "react";
 import { useState, useEffect, createContext } from "react";
+import searchMovies from "../hooks/searchMovies";
 
 const AppDataContext = createContext(null);
-const MOVIEBD_API_KEY = import.meta.env.VITE_MOVIEDB_API_KEY;
+
 
 function AppDataProvider({ children }) {
-    const [config, setConfig] = useState(null);
-    const [caricamento, setCaricamento] = useState(true);
+    const [moviesList, setMoviesList] = useState([]); //variabile per lista film
+    const [errorMsg, setErrorMsg] = useState('');
+
 
     useEffect(() => {
-        //  oggetto options per configurazione dati richiesta 
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: `Bearer ${MOVIEBD_API_KEY}`
-            }
-        };
+        searchMovies('crash')
+            .then(data => {
+                setMoviesList(data)
+                console.log(data);
 
-        // Fetch di configurazione
-        fetch('https://api.themoviedb.org/3/configuration', options)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);      
-                setConfig(res);        // Salvo i dati nello stato così non vanno persi
-                setCaricamento(false);  // la fetch è finita
             })
-            .catch(err => {
-                console.error(err);
-                setCaricamento(false);  // Finiamo il caricamento anche in caso di errore
+            .catch(error => {
+                if (error.message === 'Pagina non trovata') {
+                    setErrorMsg(error.message)
+                } else {
+                    setErrorMsg('Qualcosa è andato storto')
+                }
             });
+    }, []);
 
-    }, []); 
 
     // Condivido i dati salvati con il resto dell'app
     const value = {
-        config,
-        caricamento
+        moviesList,
+        setMoviesList,
+        errorMsg,
+        setErrorMsg
     };
 
     return (
