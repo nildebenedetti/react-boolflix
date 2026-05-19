@@ -10,3 +10,21 @@
   componenti. Per stili specifici di un singolo componente è preferibile
   usare un CSS Module (es. `NomeComponente.module.css`).
 */
+
+.card {
+  width: 500px;
+}
+
+.results-container {
+  width: 100%;
+  max-width: 1200px;
+  overflow: hidden;
+}
+
+.results-list {
+  overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1rem;
+    padding: 1rem 0;
+    scrollbar-width: none;
+}

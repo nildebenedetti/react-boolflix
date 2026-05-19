@@ -12,8 +12,8 @@ function ResultSection({ items }) {
 
     return <>
         <section>
-            <div>
-                <ul className="list-unstyled">
+            <div className="results-container mx-auto">
+                <ul className="list-unstyled results-list d-flex">
                     {items.map((item) => {
                         const {
                             id,
@@ -21,7 +21,8 @@ function ResultSection({ items }) {
                             orTitle,
                             orLanguage,
                             rating,
-                            posterPath
+                            posterPath,
+                            category
                         } = item;
                         // se trova come chiave orLnguage, assegna valore corrispondente
                         const flagCode = languageToCountry[orLanguage] || orLanguage;
