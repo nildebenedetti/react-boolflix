@@ -1,0 +1,23 @@
+
+function fetchPopularMovies() {
+
+    const API_KEY = import.meta.env.VITE_MOVIEDB_API_KEY;
+
+    const url = 'https://api.themoviedb.org/3/movie/popular?language=it-IT&page=1';
+
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${API_KEY}`
+        }
+    })
+    .then( response => {
+        if (response.status === 404) {
+            throw new Error('pagina non trovata')
+        }
+        return response.json();
+    })
+};
+
+export default fetchPopularMovies;
