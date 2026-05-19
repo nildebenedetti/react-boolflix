@@ -19,13 +19,25 @@ function AppDataProvider({ children }) {
         fetchPopularMovies()
             .then(data => {
                 const fetchResults = data.results;
-                setPopularMovies(fetchResults);
+                const popularMoviesList = fetchResults.map(movie => {
+                    return {
+                        id: `${movie.id}_movie`,
+                        title: movie.title,
+                        orTitle: movie.original_title,
+                        orLanguage: movie.original_language,
+                        rating: movie.vote_average,
+                        posterPath: movie.poster_path,
+                        overview: movie.overview,
+                        category: 'movie'
+                    };
+                }); 
+                setPopularMovies(popularMoviesList);
             })
             .catch(error => {
                 throw new Error('Errore nella fetch Popular Movies')
             });
 
-    }, [])
+    }, []);
 
     // useEffect per gestione delle ricerche tramite searchbar
     useEffect(() => {

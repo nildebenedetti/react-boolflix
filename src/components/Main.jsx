@@ -9,7 +9,7 @@ function Main() {
     {mashedResults.length > 0 && <h1>Risultati ricerca</h1>}
     <ResultSection items={mashedResults} />
     <h1>Film Popolari</h1>
-    <p>{JSON.stringify(popularMovies)}</p>
+     <ResultSection items={popularMovies} />
     </>
 
 }
