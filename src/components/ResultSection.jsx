@@ -36,5 +36,6 @@ function ResultSection({ items }) {
             </div>
         </section>
     </>
-}
-export default ResultSection
+};
+
+export default ResultSection;
