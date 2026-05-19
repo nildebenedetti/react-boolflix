@@ -2,7 +2,7 @@ import useAppData from "../hooks/useAppData";
 import ResultSection from "../components/ResultSection";
 
 function Movies() {
-    const { mashedResults } = useAppData();
+    const { mashedResults, popularMovies } = useAppData();
 
     const mashedResultsFilteredMovies = mashedResults.filter((result => {
         return result.category === 'movie';
@@ -10,10 +10,10 @@ function Movies() {
 
     return <>
         <h1> Film</h1>
-        {/* qui dopo ci metto le serie popolari */}
-        <section className="search-results-movies">
+        {mashedResultsFilteredMovies.length > 0 && <h2>Risultati Ricerca</h2>}
             <ResultSection items={mashedResultsFilteredMovies} />
-        </section>
+        <h2>Film Popolari</h2>
+        <ResultSection items={popularMovies} />
     </>
 }
 export default Movies;
