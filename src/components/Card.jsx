@@ -2,10 +2,10 @@ import { getImgURL } from "../utils/tmdb";
 
 
 
-function Card({ title, orTitle, id, orLanguage, rating, flagCode, posterPath }) {
+function Card({ title, orTitle, id, orLanguage, rating, flagCode, posterPath, category }) {
 
   const backdrop_sizes = [
-    "w300",
+    "w342",
     "w780",
     "w1280",
     "original"
@@ -13,15 +13,14 @@ function Card({ title, orTitle, id, orLanguage, rating, flagCode, posterPath }) 
 
   return <>
     <li>
-      {/* Titolo Principale */}
+      <div className="card p-3 m-2">
       <h3 className="card-title">{title}</h3>
       <img
         src={getImgURL(posterPath, backdrop_sizes[0])} // estrarlo, normalizzarlo in context e pssarlo
         className="card-img-top"
         alt={`Poster di ${title}`}
+        className="img-fluid"
       />
-
-
       <div className="card-body d-flex flex-column justify-content-between">
         <div>
           {/* Titolo Originale */}
@@ -32,6 +31,7 @@ function Card({ title, orTitle, id, orLanguage, rating, flagCode, posterPath }) 
             Rating: {parseFloat(rating.toFixed(1))}/10
           </p>
         </div>
+      </div>
       </div>
     </li>
   </>
