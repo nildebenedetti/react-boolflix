@@ -10,6 +10,26 @@ function AppDataProvider({ children }) {
     const [seriesList, setSeriesList] = useState([]); // variabile per settare results di series
     const [errorMsg, setErrorMsg] = useState('');
     const [searchQuery, setSearchQuery] = useState(''); //vribile di stato globale che viene aggiornata da form submit
+        //rimappo i dati di movielist e seriies list
+    const standardMoviesList = moviesList.map(movie => {
+        return {
+            id: movie.id,
+            title: movie.title,
+            orTitle: movie.original_title,
+            orLanguage: movie.original_language,
+            rating: movie.vote_average
+        };
+    });
+
+    const standardSeriesList = seriesList.map(show => {
+        return {
+            id: show.id,
+            title: show.name,
+            orTitle: show.original_name,
+            orLanguage: show.original_language,
+            rating: show.vote_average
+        };
+    });
 
 
     useEffect(() => {
@@ -22,19 +42,7 @@ function AppDataProvider({ children }) {
                 if (error.message === 'Pagina non trovata') {
                     setErrorMsg(error.message)
                 } else {
-                    setErrorMsg('errore in ricerca film')
-                }
-            });
-        searchSeries(searchQuery)
-            .then(data => {
-                setSeriesList(data.results)
-                console.log(data);
-            })
-            .catch(error => {
-                if (error.message === 'Pagina non trovata') {
-                    setErrorMsg(error.message)
-                } else {
-                    setErrorMsg('errore in ricerca serieTV')
+                    setErrorMsg('errore in ricerca')
                 }
             });
         
@@ -50,7 +58,9 @@ function AppDataProvider({ children }) {
         errorMsg,
         setErrorMsg,
         searchQuery,
-        setSearchQuery
+        setSearchQuery,
+        standardMoviesList,
+        standardSeriesList
     };
 
     return (
