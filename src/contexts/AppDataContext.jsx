@@ -17,7 +17,8 @@ function AppDataProvider({ children }) {
             title: movie.title,
             orTitle: movie.original_title,
             orLanguage: movie.original_language,
-            rating: movie.vote_average
+            rating: movie.vote_average,
+            posterPath: movie.poster_path
         };
     });
 
@@ -27,7 +28,8 @@ function AppDataProvider({ children }) {
             title: show.name,
             orTitle: show.original_name,
             orLanguage: show.original_language,
-            rating: show.vote_average
+            rating: show.vote_average,
+            posterPath: show.poster_path
         };
     });
 

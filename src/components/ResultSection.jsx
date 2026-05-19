@@ -1,4 +1,5 @@
 import useAppData from "../hooks/useAppData";
+import Card from "./Card";
 
 function ResultSection({ items }) {
     // gestione sigle lingua !== da flag code
@@ -19,17 +20,17 @@ function ResultSection({ items }) {
                             title,
                             orTitle,
                             orLanguage,
-                            rating
+                            rating,
+                            posterPath
                         } = item;
                         // se trova come chiave orLnguage, assegna valore corrispondente
                         const flagCode = languageToCountry[orLanguage] || orLanguage;
                         return (
-                            <li key={id}>
-                                <h3>{`Titolo: ${title}`}</h3>
-                                <h5>{`Titolo Originale: ${orTitle}`}</h5> {/* Ora puoi usare orName! */}
-                                <span className={`fi fi-${flagCode} rounded-1`}></span>
-                                <p>{`Rating: ${parseFloat(rating.toFixed(1))}/10`}</p>
-                            </li>
+                                <Card
+                                key={id}
+                                {...item}
+                                flagCode={flagCode}
+                                />
                         );
                     })}
                 </ul>
