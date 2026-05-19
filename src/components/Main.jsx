@@ -6,10 +6,10 @@ function Main() {
 
 
     return <>
-    {mashedResults.length > 0 && <h1>Risultati Ricerca</h1>}
-    <ResultSection items={mashedResults} />
-    <h1>Film Popolari</h1>
-     <ResultSection items={popularMovies} />
+        {mashedResults.length > 0 && <h1>Risultati Ricerca</h1>}
+        <ResultSection items={mashedResults} />
+        <h1>Film Popolari</h1>
+        <ResultSection items={popularMovies} />
     </>
 
 }
