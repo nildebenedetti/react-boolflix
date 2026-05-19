@@ -8,46 +8,67 @@ const AppDataContext = createContext(null);
 function AppDataProvider({ children }) {
     const [moviesList, setMoviesList] = useState([]); //variabile per lista film
     const [seriesList, setSeriesList] = useState([]); // variabile per settare results di series
-    const [errorMsg, setErrorMsg] = useState('');
+    const [errorMsg, setErrorMsg] = useState([]);
     const [searchQuery, setSearchQuery] = useState(''); //vribile di stato globale che viene aggiornata da form submit
-        //rimappo i dati di movielist e seriies list
-    const standardMoviesList = moviesList.map(movie => {
-        return {
-            id: movie.id,
-            title: movie.title,
-            orTitle: movie.original_title,
-            orLanguage: movie.original_language,
-            rating: movie.vote_average,
-            posterPath: movie.poster_path
-        };
-    });
-
-    const standardSeriesList = seriesList.map(show => {
-        return {
-            id: show.id,
-            title: show.name,
-            orTitle: show.original_name,
-            orLanguage: show.original_language,
-            rating: show.vote_average,
-            posterPath: show.poster_path
-        };
-    });
+    const [mashedResults, setMashedResults] = useState([]);
 
 
     useEffect(() => {
-        searchMovies(searchQuery)
-            .then(data => {
-                setMoviesList(data.results)
-                console.log(data);
-            })
-            .catch(error => {
-                if (error.message === 'Pagina non trovata') {
-                    setErrorMsg(error.message)
-                } else {
-                    setErrorMsg('errore in ricerca')
-                }
-            });
-        
+        // Se la query è vuota, evitiamo di fare chiamate a vuoto
+        if (!searchQuery.trim()) return;
+        // devo chiamare le due funzioni in una promiseall
+        // QUANDO CI SONO TUTTI I DATI, 
+        // passare i dati con standarList rispettivo
+        // restituire una variabile unica con tutte le query
+        // che usero nella result section come prop per popolare la result in home.
+        Promise.all([
+            searchMovies(searchQuery),
+            searchSeries(searchQuery)
+        ])
+            .then(([moviesData, seriesData]) => {
+
+        const moviesResults = moviesData.results || [];
+        const seriesResults = seriesData.results || [];
+
+        //rimappo i dati di movielist e seriies list
+        const standardMoviesList = moviesResults.map(movie => {
+            return {
+                id: `${movie.id}_movie`,
+                title: movie.title,
+                orTitle: movie.original_title,
+                orLanguage: movie.original_language,
+                rating: movie.vote_average,
+                posterPath: movie.poster_path,
+                overview: movie.overview,
+                category: 'movie'
+            };
+        });
+
+        const standardSeriesList = seriesResults.map(show => {
+            return {
+                id: `${show.id}_serie`,
+                title: show.name,
+                orTitle: show.original_name,
+                orLanguage: show.original_language,
+                rating: show.vote_average,
+                posterPath: show.poster_path,
+                overview: show.overview,
+                category: 'series'
+            };
+        });
+
+        setMashedResults([...standardMoviesList, ...standardSeriesList]);
+    })
+    .catch( error => {
+        if (error.message === 'Pagina non trovata') {
+            setErrorMsg(error.message);
+        } else {
+            setErrorMsg('Errore durante la ricerca globale');
+        }
+    });
+
+
+
     }, [searchQuery]);
 
 
@@ -61,8 +82,8 @@ function AppDataProvider({ children }) {
         setErrorMsg,
         searchQuery,
         setSearchQuery,
-        standardMoviesList,
-        standardSeriesList
+        mashedResults,
+        setMashedResults
     };
 
     return (
