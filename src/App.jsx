@@ -20,7 +20,7 @@ function App() {
               <Route index element={<HomePage />} />
               <Route path="*" element={<NotFound />} />
               <Route path="/serie-tv" element={<Series />} />
-              <Route path="/film" element={<Series />} />
+              <Route path="/film" element={<Movies />} />
             </Route>
           </Routes>
         </BrowserRouter>
