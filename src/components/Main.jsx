@@ -2,14 +2,14 @@ import useAppData from "../hooks/useAppData";
 import ResultSection from "./ResultSection";
 
 function Main() {
-    const { standardMoviesList, standardSeriesList } = useAppData();
+    const { mashedResults } = useAppData();
 
 
     return <>
     
-    <ResultSection items={standardMoviesList} />
+    <ResultSection items={mashedResults} />
 
-    <ResultSection items={standardSeriesList} />
+
     </>
 
 }
