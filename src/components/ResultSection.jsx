@@ -22,7 +22,8 @@ function ResultSection({ items }) {
                             orLanguage,
                             rating,
                             posterPath,
-                            category
+                            category,
+                            overview
                         } = item;
                         // se trova come chiave orLnguage, assegna valore corrispondente
                         const flagCode = languageToCountry[orLanguage] || orLanguage;
