@@ -5,13 +5,13 @@ import { useState } from "react";
 
 function Header() {
     const { theme, toggleTheme } = useTheme();
-    const [ userInput, setUserInput ] = useState('');
+    const [userInput, setUserInput] = useState('');
     const { setSearchQuery } = useAppData();
 
     const submitHandler = (event) => {
         event.preventDefault();
         setSearchQuery(userInput);
-        
+
         // QUANDO preme bottone, allora invi il valore userInput e passalo come keyword di ricerca
         // devo scatenare lággiornamento delle sezioni dedicare a movies e seriers nel main
     };
@@ -34,6 +34,10 @@ function Header() {
                     >
                         <span className="navbar-toggler-icon" />
                     </button>
+                        <form onSubmit={submitHandler} className="d-flex" role="search">
+                            <input className="form-control me-2" type="text" value={userInput} onChange={changeHandler} placeholder="Search" />
+                            <button className="btn btn-outline-danger" type="submit" >Search</button>
+                        </form>
                     <div className="collapse navbar-collapse" id="mainNav">
                         <ul className="navbar-nav ms-auto align-items-center">
                             <li className="nav-item">
@@ -56,14 +60,6 @@ function Header() {
                             </li>
                         </ul>
                     </div>
-                </div>
-            </nav>
-            <nav className="navbar bg-body-tertiary">
-                <div className="container-fluid d-flex justify-content-center">
-                    <form onSubmit={submitHandler} className="d-flex" role="search">
-                        <input className="form-control me-2" type="text" value={userInput} onChange={changeHandler} placeholder="Search"/>
-                        <button className="btn btn-outline-success" type="submit" >Search</button>
-                    </form>
                 </div>
             </nav>
         </header>
