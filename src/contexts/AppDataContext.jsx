@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useState, useEffect, createContext } from "react";
 import searchMovies from "../hooks/searchMovies";
 import searchSeries from "../hooks/searchSeries";
+import fetchPopularMovies from "../hooks/fetchPopular";
 
 const AppDataContext = createContext(null);
 
@@ -11,9 +12,24 @@ function AppDataProvider({ children }) {
     const [errorMsg, setErrorMsg] = useState([]);
     const [searchQuery, setSearchQuery] = useState(''); //vribile di stato globale che viene aggiornata da form submit
     const [mashedResults, setMashedResults] = useState([]);
+    const [popularMovies, setPopularMovies] = useState([]);
 
-
+    // useEffect per le fetch da eseguire solo all'avvio
     useEffect(() => {
+        fetchPopularMovies()
+            .then(data => {
+                const fetchResults = data.results;
+                setPopularMovies(fetchResults);
+            })
+            .catch(error => {
+                throw new Error('Errore nella fetch Popular Movies')
+            });
+
+    }, [])
+
+    // useEffect per gestione delle ricerche tramite searchbar
+    useEffect(() => {
+
         // Se la query è vuota, evitiamo di fare chiamate a vuoto
         if (!searchQuery.trim()) return;
         // devo chiamare le due funzioni in una promiseall
@@ -27,45 +43,45 @@ function AppDataProvider({ children }) {
         ])
             .then(([moviesData, seriesData]) => {
 
-        const moviesResults = moviesData.results || [];
-        const seriesResults = seriesData.results || [];
+                const moviesResults = moviesData.results || [];
+                const seriesResults = seriesData.results || [];
 
-        //rimappo i dati di movielist e seriies list
-        const standardMoviesList = moviesResults.map(movie => {
-            return {
-                id: `${movie.id}_movie`,
-                title: movie.title,
-                orTitle: movie.original_title,
-                orLanguage: movie.original_language,
-                rating: movie.vote_average,
-                posterPath: movie.poster_path,
-                overview: movie.overview,
-                category: 'movie'
-            };
-        });
+                //rimappo i dati di movielist e seriies list
+                const standardMoviesList = moviesResults.map(movie => {
+                    return {
+                        id: `${movie.id}_movie`,
+                        title: movie.title,
+                        orTitle: movie.original_title,
+                        orLanguage: movie.original_language,
+                        rating: movie.vote_average,
+                        posterPath: movie.poster_path,
+                        overview: movie.overview,
+                        category: 'movie'
+                    };
+                });
 
-        const standardSeriesList = seriesResults.map(show => {
-            return {
-                id: `${show.id}_serie`,
-                title: show.name,
-                orTitle: show.original_name,
-                orLanguage: show.original_language,
-                rating: show.vote_average,
-                posterPath: show.poster_path,
-                overview: show.overview,
-                category: 'series'
-            };
-        });
+                const standardSeriesList = seriesResults.map(show => {
+                    return {
+                        id: `${show.id}_serie`,
+                        title: show.name,
+                        orTitle: show.original_name,
+                        orLanguage: show.original_language,
+                        rating: show.vote_average,
+                        posterPath: show.poster_path,
+                        overview: show.overview,
+                        category: 'series'
+                    };
+                });
 
-        setMashedResults([...standardMoviesList, ...standardSeriesList]);
-    })
-    .catch( error => {
-        if (error.message === 'Pagina non trovata') {
-            setErrorMsg(error.message);
-        } else {
-            setErrorMsg('Errore durante la ricerca globale');
-        }
-    });
+                setMashedResults([...standardMoviesList, ...standardSeriesList]);
+            })
+            .catch(error => {
+                if (error.message === 'Pagina non trovata') {
+                    setErrorMsg(error.message);
+                } else {
+                    setErrorMsg('Errore durante la ricerca globale');
+                }
+            });
 
 
 
@@ -83,7 +99,9 @@ function AppDataProvider({ children }) {
         searchQuery,
         setSearchQuery,
         mashedResults,
-        setMashedResults
+        setMashedResults,
+        popularMovies,
+        setPopularMovies
     };
 
     return (
