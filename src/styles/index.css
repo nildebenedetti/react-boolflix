@@ -67,6 +67,13 @@
   border-radius: 0.375rem; /* Arrotondamento standard di Bootstrap */
 }
 
+.overview-text {
+  font-size: 18px;
+}
+
+.original-title-text {
+  line-height: 1.7;
+}
 
 /* gestione scroll orizzontale sezione search result*/
 
